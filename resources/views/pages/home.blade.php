@@ -33,7 +33,7 @@
             <h1 class="text-lg font-bold">Bootcamp 3 <br> Blue Team Operation</h1>
             <h1 class="text-lg font-bold"> </h1>
             <h1 class="mt-3">Harga: <span class="line-through">Rp3.200.000</span> <span class="text-red-600">Rp159.000</span></h1>
-            <img src="{{ asset('images/poster1.jpg') }}" alt="Logo" class="w-full h-96 rounded-2xl object-fill mt-5">
+            <img src="{{ asset('images/posterbc2.jpg') }}" alt="Logo" class="w-full h-96 rounded-2xl object-fill mt-5">
             <h1 class="mt-3 font-bold text-justify">Bootcamp 3 - Blue Teaming Operation merupakan Bootcamp yang diselenggarakan pada Bulan Mei 2025. Dapatkan Module lengkapnya + Rekaman Video yang bisa dipelajari kapan saja dalam mempelajari strategi simulasi Blue Team.</h1>
             <div class="flex justify-center items-center mt-5">
                 <button class="px-10 py-3 bg-yellow-500 rounded-full font-bold">Beli Sekarang</button>
@@ -68,7 +68,7 @@
         <div class="flex gap-5">
             <div class="p-3 rounded-xl bg-white shadow-2xl w-[45%]">
                 <h1 class="mb-5 font-bold">Bootcamp 1 - Red Team <br> & Blue Team</h1>
-                <img src="{{ asset('images/poster2.jpg') }}" alt="Logo" class="rounded-2xl">
+                <img src="{{ asset('images/posterbc1.jpg') }}" alt="Logo" class="rounded-2xl">
                 <div class="flex justify-center items-center mt-5">
                     <h1 class="font-bold"><span class="line-through">Rp2.500.000</span> <span class="text-red-500">Rp899.000</span></h1>
                 </div>
