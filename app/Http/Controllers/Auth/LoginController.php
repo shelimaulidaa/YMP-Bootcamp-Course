@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
@@ -14,31 +16,44 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        // Validasi input
-        $credentials = $request->validate([
+        // 🧩 1. Validasi input dasar
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:6',
+            'g-recaptcha-response' => 'required', // pastikan token dikirim
         ]);
 
-        // Coba autentikasi
-      if (Auth::attempt($credentials)) {
-    $request->session()->regenerate();
-    return redirect()->intended('/admin/dashboard')->with('success', 'Login berhasil! Selamat datang 👋');
-}
+        // 🔎 2. Verifikasi token reCAPTCHA ke Google
+        $recaptchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret'   => config('services.recaptcha.secret_key'),
+            'response' => $request->input('g-recaptcha-response'),
+        ]);
 
-return back()->with('error', 'Email atau password salah. Silakan coba lagi.');
-;
+        $result = $recaptchaResponse->json();
 
-        // Jika gagal
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        // 🧠 3. Cek hasil verifikasi reCAPTCHA
+        if (!($result['success'] ?? false) || ($result['score'] ?? 0) < 0.5) {
+            return back()->with('error', 'Verifikasi keamanan gagal. Silakan coba lagi.');
+        }
+
+        // 🔐 4. Hanya ambil email dan password untuk login
+        $credentials = $request->only('email', 'password');
+
+        // ✅ 5. Lakukan autentikasi
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended('/admin/dashboard')
+                ->with('success', 'Login berhasil! Selamat datang 👋');
+        }
+
+        // ❌ 6. Jika gagal login
+        return back()->with('error', 'Email atau password salah. Silakan coba lagi.')
+                     ->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
