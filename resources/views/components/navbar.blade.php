@@ -19,10 +19,13 @@
                    class="px-4 py-2 rounded-lg border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-white transition">
                    Login
                 </a>
-                <a href="{{ route('register') }}" 
-                   class="px-4 py-2 bg-yellow-400 rounded-lg border border-yellow-400 text-white hover:bg-yellow-300 transition">
-                   Register
+                <a href="https://wa.me/6282119205610?text=Hallo%20Saya%20Mau%20Daftar%20Bootcamp"
+                   target="_blank" rel="noopener noreferrer"
+                   class="px-4 py-2 bg-yellow-400 rounded-lg border border-yellow-400 text-white hover:bg-yellow-300 transition"
+                   aria-label="Chat WhatsApp: Hallo Saya Mau Daftar Bootcamp">
+                    Register
                 </a>
+
             </div>
 
             <div class="md:hidden flex items-center">

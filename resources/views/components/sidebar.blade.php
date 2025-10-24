@@ -62,7 +62,7 @@
     </div>
 
     <!-- Bottom Links -->
-    <div class="px-4 h-40 p-3 bg-gradient-to-t rounded-br-4xl from-yellow-300/10 to-yellow-300">
+    <div class="px-7 h-40 p-6 bg-gradient-to-t rounded-br-4xl">
         <form action="{{ route('logout') }}" method="POST">
     @csrf
     <button type="submit" class="flex items-center text-black font-semibold mb-2 w-full">

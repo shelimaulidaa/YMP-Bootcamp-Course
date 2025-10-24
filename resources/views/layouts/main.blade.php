@@ -16,7 +16,9 @@
         @yield('content')
     </main>
 
-    {{-- Footer tampil di semua halaman --}}
-     @include('components.footer')
+    @unless(request()->routeIs('login', 'register'))
+        @include('components.footer')
+    @endunless
+
 </body>
 </html>
