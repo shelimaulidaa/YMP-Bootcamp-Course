@@ -2,24 +2,45 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AdminKelasController;
+use App\Http\Controllers\Admin\KelasController;
 
-// ====== Halaman Utama ======
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+// ======================
+// 🔹 Halaman Utama
+// ======================
 Route::view('/', 'pages.home')->name('home');
 Route::view('/about', 'pages.about')->name('about');
 Route::view('/bootcamp', 'pages.bootcamp')->name('bootcamp');
 Route::view('/contact', 'pages.contact')->name('contact');
 
-
-Route::get('/login', [LoginController::class, 'showLoginForm'])->middleware('guest')->name('login');
+// ======================
+// 🔹 Authentication Routes
+// ======================
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::view('/register', 'pages.register')->name('register');
 
-Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::get('/dashboard', fn() => view('pages.admin.dashboard'))->name('admin.dashboard');
-    Route::get('/bootcamp', fn() => view('pages.admin.bootcamp'))->name('admin.bootcamp');
-    Route::get('/course', fn() => view('pages.admin.course'))->name('admin.course');
-    Route::get('/sertifikat', fn() => view('pages.admin.sertifikat'))->name('admin.sertifikat');
-    Route::get('/transaksi', fn() => view('pages.admin.transaksi'))->name('admin.transaksi');
+// ======================
+// 🔹 USER ROUTES
+// ======================
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/dashboard', fn() => view('pages.user.dashboard'))->name('dashboard');
+    Route::get('/bootcamp', fn() => view('pages.user.bootcamp'))->name('bootcamp');
+    Route::get('/course', fn() => view('pages.user.course'))->name('course');
+    Route::get('/sertifikat', fn() => view('pages.user.sertifikat'))->name('sertifikat');
+    Route::get('/transaksi', fn() => view('pages.user.transaksi'))->name('transaksi');
 });
 
+// ======================
+// 🔹 ADMIN ROUTES
+// ======================
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminKelasController::class, 'index'])->name('dashboard');
+    Route::resource('kelas', KelasController::class);
+});

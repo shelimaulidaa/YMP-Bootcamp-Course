@@ -19,10 +19,6 @@
                    class="px-4 py-2 rounded-lg border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-white transition">
                    Login
                 </a>
-                <a href="{{ route('register') }}" 
-                   class="px-4 py-2 bg-yellow-400 rounded-lg border border-yellow-400 text-white hover:bg-yellow-300 transition">
-                   Register
-                </a>
             </div>
 
             <div class="md:hidden flex items-center">
@@ -47,10 +43,6 @@
             <a href="{{ route('login') }}" 
                class="block w-full text-center border border-blue-600 text-blue-400 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition">
                Login
-            </a>
-            <a href="{{ route('register') }}" 
-               class="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-               Register
             </a>
         </div>
     </div>

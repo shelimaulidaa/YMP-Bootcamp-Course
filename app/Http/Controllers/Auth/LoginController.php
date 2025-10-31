@@ -9,36 +9,31 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('pages.login');
+        return view('pages.login'); // halaman login
     }
 
     public function login(Request $request)
     {
-        // Validasi input
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
 
-        // Coba autentikasi
-      if (Auth::attempt($credentials)) {
-    $request->session()->regenerate();
-    return redirect()->intended('/admin/dashboard')->with('success', 'Login berhasil! Selamat datang 👋');
-}
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
 
-return back()->with('error', 'Email atau password salah. Silakan coba lagi.');
-;
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Login berhasil! Selamat datang Admin 👋');
+            }
+            return redirect()->route('user.dashboard')->with('success', 'Login berhasil!');
+        }
 
-        // Jika gagal
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        return back()->with('error', 'Email atau password salah.');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
